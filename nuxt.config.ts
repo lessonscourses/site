@@ -119,7 +119,7 @@ export default defineNuxtConfig({
   },
   image: {
     aliyun: {
-      // baseURL: "https://disk.weboko.net/",
+      baseURL: "https://disk.weboko.net/",
       //baseURL: "http://localhost:3000",
     },
   },

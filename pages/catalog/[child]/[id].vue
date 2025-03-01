@@ -201,7 +201,6 @@ const nameCat = (item) => {
                     <div class="catalog-block-img">
                       <NuxtImg
                         v-if="item.img.length > 0"
-                        provider="aliyun"
                         :src="item.img[0].url"
                         :alt="item.img[0].name"
                         format="wepb"

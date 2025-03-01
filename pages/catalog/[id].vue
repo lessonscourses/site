@@ -163,7 +163,6 @@ const nameCat = (item) => {
                 :to="'/catalog/' + item.kirilica + '/' + item.kirilica"
               >
                 <NuxtImg
-                  provider="aliyun"
                   v-if="item.img.length"
                   :src="item.img[0].url"
                   :alt="item.img[0].name"
