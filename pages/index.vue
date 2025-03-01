@@ -4,6 +4,7 @@ const { $anime } = useNuxtApp();
 const isVisible = ref(true);
 const mobileScin = ref(100);
 const lottieAnimation = ref(null);
+
 const animationFun = () => {
   $anime({
     targets: [".title", ".title-h2"],
@@ -66,7 +67,7 @@ useHead({
     {
       hid: "og:image",
       property: "og:image",
-      content: `https://fastsite.net/nuxt-imf.webp`,
+      content: `https://weboko.net/nuxt-imf.webp`,
     },
   ],
 });

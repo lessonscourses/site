@@ -10,13 +10,16 @@ if (router.currentRoute.value.query.page != undefined) {
   sortPage.value = currentPage.value * pageSize.value - pageSize.value;
 }
 const { data: project, refresh } = await useFetch("/api/courses", {
+  key: route.params.id,
   method: "POST",
   headers: {
     "Content-Type": "application/json; charset=UTF-8",
   },
   body: { sortPage, pageSize },
 });
-
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 const handleCurrentChange = (val) => {
   if (val == 1) {
     sortPage.value = 0;
@@ -31,6 +34,7 @@ const handleCurrentChange = (val) => {
     },
   });
   // refresh();
+  scrollToTop();
 };
 </script>
 
@@ -64,11 +68,11 @@ const handleCurrentChange = (val) => {
                     </strong>
                     <div class="catalog-block-desc-info">
                       <Icon name="solar:hourglass-broken" />
-                      <span>15 ч 4 мин 24 сек</span>
+                      <span>{{ item.duration }}</span>
                     </div>
                     <div class="catalog-block-desc-info">
                       <Icon name="solar:earth-broken" />
-                      <span>Russian</span>
+                      <span>{{ item.language }}</span>
                     </div>
                   </div>
                 </nuxt-link>
@@ -85,6 +89,7 @@ const handleCurrentChange = (val) => {
           :current-page="currentPage"
           :page-size="pageSize"
           :total="project.count"
+          :pager-count="4"
           @current-change="handleCurrentChange"
         />
       </div>

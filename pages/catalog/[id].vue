@@ -59,6 +59,7 @@ if (router.currentRoute.value.query.page != undefined) {
 }
 
 const { data: project, refresh } = await useFetch("/api/courses", {
+  key: route.params.id,
   method: "POST",
   headers: {
     "Content-Type": "application/json; charset=UTF-8",
@@ -82,7 +83,9 @@ const { data: datachild } = await useFetch("/api/childcategory/", {
 matchingChildren.value = datachild.value.filter(
   (child) => child.category == route.params.id
 );
-
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 const handleCurrentChange = (val) => {
   if (val == 1) {
     sortPage.value = 0;
@@ -98,7 +101,9 @@ const handleCurrentChange = (val) => {
     },
   });
   //refresh();
+  scrollToTop();
 };
+
 const handleChecked = (val) => {
   fillArr.value = val;
   queryFill.value = JSON.parse(JSON.stringify(val)).join(",");
@@ -112,6 +117,7 @@ const handleChecked = (val) => {
   });
   //refresh();
 };
+
 const handleClose = (tag) => {
   fillArr.value.splice(fillArr.value.indexOf(tag), 1);
   fiilTaf(filter.value, fillArr.value);
@@ -290,6 +296,7 @@ const nameCat = (item) => {
             :current-page="currentPage"
             :page-size="pageSize"
             :total="project.count"
+            :pager-count="4"
             @current-change="handleCurrentChange"
           />
         </div>
