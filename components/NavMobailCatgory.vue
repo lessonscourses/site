@@ -119,7 +119,6 @@ const restoreLastActive = () => {};
                     @click="visible = false"
                   >
                     <NuxtImg
-                      provider="aliyun"
                       v-if="itemChild.img.length"
                       :src="itemChild.img[0].url"
                       :alt="itemChild.img[0].name"

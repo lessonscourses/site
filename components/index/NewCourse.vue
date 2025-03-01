@@ -76,7 +76,6 @@ const slideLink = (swiper) => {
                   <div class="new-slide-item-img">
                     <NuxtImg
                       v-if="slide.img.length > 0"
-                      provider="aliyun"
                       :src="slide.img[0].url"
                       :alt="slide.img[0].name"
                       format="wepb"
