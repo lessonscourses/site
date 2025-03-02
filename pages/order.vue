@@ -61,31 +61,31 @@ const currentDate = new Date();
 const isoString = currentDate.toISOString();
 
 const submitForm = async () => {
-  const currentDate = new Date();
-  // Установка текущей даты и времени в поле "date_payment"
-  form.value.date_payment = isoString;
-
-  // Установка даты окончания, добавив месяцы к текущей дате
-  const expirationDate = new Date(isoString);
-  expirationDate.setMonth(expirationDate.getMonth() + mountTariff.value);
-  form.value.expiration_date = expirationDate.toISOString();
-  console.log(form.value);
   try {
+    // Создаем заказ в базе
     const { data: response } = await useFetch("/api/add/purchases", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-      },
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
       body: form.value,
     });
-    useRouter().push({
-      name: "success",
-    });
-    // console.log(currentDate);
-    // Перенаправляем на страницу оплаты
-    // window.location.href = `https://payeer.com/merchant/?${response.data}`;
+
+    // Отправляем запрос на создание платежа
+    const paymentResponse = await fetch("/api/payment/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: tarifCost.value,
+        orderId: randomNumbers,
+      }),
+    }).then((res) => res.json());
+
+    if (paymentResponse.status === "success") {
+      window.location.href = paymentResponse.urlPayment; // Перенаправляем пользователя на оплату
+    } else {
+      console.error("Ошибка при создании платежа:", paymentResponse);
+    }
   } catch (error) {
-    console.error("Error submitting form:", error);
+    console.error("Ошибка при отправке формы:", error);
   }
 };
 </script>
